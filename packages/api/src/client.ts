@@ -1,7 +1,10 @@
 const API_URL = 'https://pokeapi.co/api/v2';
 
 export class ApiError extends Error {
-  constructor(readonly status: number, message: string) {
+  constructor(
+    readonly status: number,
+    message: string,
+  ) {
     super(message);
     this.name = 'ApiError';
   }

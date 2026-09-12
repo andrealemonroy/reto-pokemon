@@ -5,8 +5,13 @@ describe('LocalStoragePokemonHistoryRepository', () => {
   let counter = 0;
   let repository: LocalStoragePokemonHistoryRepository;
   beforeEach(() => {
-    localStorage.clear(); counter = 0;
-    repository = new LocalStoragePokemonHistoryRepository(localStorage, () => new Date(`2025-01-0${++counter}T00:00:00Z`), () => `visit-${counter}`);
+    localStorage.clear();
+    counter = 0;
+    repository = new LocalStoragePokemonHistoryRepository(
+      localStorage,
+      () => new Date(`2025-01-0${++counter}T00:00:00Z`),
+      () => `visit-${counter}`,
+    );
   });
   it('creates, increments and deduplicates entries', () => {
     repository.registerVisit({ id: 25, name: 'pikachu', imageUrl: 'image' }, 'open-1');
@@ -28,7 +33,9 @@ describe('LocalStoragePokemonHistoryRepository', () => {
     expect(repository.shouldShowLatestVisit()).toBe(true);
     repository.acknowledgeLatestVisit();
     expect(repository.shouldShowLatestVisit()).toBe(false);
-    expect(new LocalStoragePokemonHistoryRepository(localStorage).shouldShowLatestVisit()).toBe(false);
+    expect(new LocalStoragePokemonHistoryRepository(localStorage).shouldShowLatestVisit()).toBe(
+      false,
+    );
     repository.registerVisit(pokemon, 'open-2');
     expect(repository.shouldShowLatestVisit()).toBe(true);
   });

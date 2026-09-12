@@ -1,4 +1,7 @@
-export interface NamedApiResource { readonly name: string; readonly url: string }
+export interface NamedApiResource {
+  readonly name: string;
+  readonly url: string;
+}
 export interface PokemonListResponse {
   readonly count: number;
   readonly next: string | null;
@@ -14,7 +17,10 @@ export interface PokemonApiResponse {
   readonly weight: number;
   readonly base_experience: number | null;
   readonly types: readonly { readonly slot: number; readonly type: NamedApiResource }[];
-  readonly abilities: readonly { readonly ability: NamedApiResource; readonly is_hidden: boolean }[];
+  readonly abilities: readonly {
+    readonly ability: NamedApiResource;
+    readonly is_hidden: boolean;
+  }[];
   readonly stats: readonly { readonly base_stat: number; readonly stat: NamedApiResource }[];
   readonly sprites: {
     readonly front_default: string | null;
@@ -35,7 +41,11 @@ export interface PokemonSummary {
 export interface PokemonDetail extends PokemonSummary {
   readonly imageFallbackUrl: string | null;
   readonly types: readonly string[];
-  readonly stats: readonly { readonly key: string; readonly label: string; readonly value: number }[];
+  readonly stats: readonly {
+    readonly key: string;
+    readonly label: string;
+    readonly value: number;
+  }[];
   readonly heightMeters: number;
   readonly weightKilograms: number;
   readonly baseExperience: number | null;

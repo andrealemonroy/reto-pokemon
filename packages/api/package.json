@@ -3,7 +3,17 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "exports": { ".": "./src/index.ts" },
-  "dependencies": { "@tanstack/react-query": "^5.87.1" },
-  "peerDependencies": { "react": "^19.1.1" }
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./mappers": "./src/mappers.ts",
+    "./queries": "./src/queries.ts",
+    "./types": "./src/types.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.87.1"
+  },
+  "peerDependencies": {
+    "react": "^19.1.1"
+  }
 }

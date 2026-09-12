@@ -9,7 +9,9 @@ function storedTheme(): ThemePreference {
 }
 
 function applyTheme(preference: ThemePreference): void {
-  const dark = preference === 'dark' || (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+  const dark =
+    preference === 'dark' ||
+    (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
 }
@@ -32,7 +34,9 @@ export function initializeTheme(): () => void {
   const preference = storedTheme();
   applyTheme(preference);
   const media = matchMedia('(prefers-color-scheme: dark)');
-  const listener = () => { if (storedTheme() === 'system') applyTheme('system'); };
+  const listener = () => {
+    if (storedTheme() === 'system') applyTheme('system');
+  };
   media.addEventListener('change', listener);
   return () => media.removeEventListener('change', listener);
 }

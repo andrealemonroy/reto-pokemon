@@ -1,8 +1,12 @@
 import type { NamedApiResource, PokemonApiResponse, PokemonDetail, PokemonSummary } from './types';
 
 const STAT_LABELS: Readonly<Record<string, string>> = {
-  hp: 'HP', attack: 'Ataque', defense: 'Defensa',
-  'special-attack': 'Ataque especial', 'special-defense': 'Defensa especial', speed: 'Velocidad',
+  hp: 'HP',
+  attack: 'Ataque',
+  defense: 'Defensa',
+  'special-attack': 'Ataque especial',
+  'special-defense': 'Defensa especial',
+  speed: 'Velocidad',
 };
 
 export function pokemonIdFromUrl(url: string): number {
@@ -26,11 +30,14 @@ export function mapPokemonDetail(response: PokemonApiResponse): PokemonDetail {
   return {
     id: response.id,
     name: response.name,
-    imageUrl: dreamWorld ?? artwork ?? response.sprites.front_default ?? pokemonArtworkUrl(response.id),
+    imageUrl:
+      dreamWorld ?? artwork ?? response.sprites.front_default ?? pokemonArtworkUrl(response.id),
     imageFallbackUrl: artwork ?? response.sprites.front_default,
     types: [...response.types].sort((a, b) => a.slot - b.slot).map(({ type }) => type.name),
     stats: response.stats.map(({ stat, base_stat }) => ({
-      key: stat.name, label: STAT_LABELS[stat.name] ?? stat.name, value: base_stat,
+      key: stat.name,
+      label: STAT_LABELS[stat.name] ?? stat.name,
+      value: base_stat,
     })),
     heightMeters: response.height / 10,
     weightKilograms: response.weight / 10,

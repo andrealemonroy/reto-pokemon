@@ -3,7 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "concurrently -k -n detail,history,shell -c blue,magenta,green \"npm run dev:detail\" \"npm run dev:history\" \"npm run dev:shell\"",
     "dev:shell": "npm run dev -w @pokedex/shell",
@@ -15,7 +18,9 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
-    "validate": "npm run lint && npm run typecheck && npm run test && npm run build"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
