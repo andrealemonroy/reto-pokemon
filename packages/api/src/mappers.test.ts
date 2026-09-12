@@ -33,6 +33,8 @@ describe('pokemon mappers', () => {
     expect(mapPokemonDetail(response)).toMatchObject({
       imageUrl: 'art.svg',
       imageFallbackUrl: 'art.png',
+      type: 'electric',
+      types: ['electric'],
       heightMeters: 0.4,
       weightKilograms: 6,
       stats: [{ label: 'HP', value: 35 }],

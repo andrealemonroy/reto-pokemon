@@ -27,13 +27,15 @@ export function mapPokemonResource(resource: NamedApiResource, type?: string): P
 export function mapPokemonDetail(response: PokemonApiResponse): PokemonDetail {
   const dreamWorld = response.sprites.other?.dream_world?.front_default;
   const artwork = response.sprites.other?.['official-artwork']?.front_default;
+  const types = [...response.types].sort((a, b) => a.slot - b.slot).map(({ type }) => type.name);
   return {
     id: response.id,
     name: response.name,
     imageUrl:
       dreamWorld ?? artwork ?? response.sprites.front_default ?? pokemonArtworkUrl(response.id),
     imageFallbackUrl: artwork ?? response.sprites.front_default,
-    types: [...response.types].sort((a, b) => a.slot - b.slot).map(({ type }) => type.name),
+    type: types[0],
+    types,
     stats: response.stats.map(({ stat, base_stat }) => ({
       key: stat.name,
       label: STAT_LABELS[stat.name] ?? stat.name,
