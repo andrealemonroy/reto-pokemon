@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/api" },
+    { "path": "./packages/contracts" },
+    { "path": "./packages/domain" },
+    { "path": "./packages/ui" },
+    { "path": "./apps/shell" },
+    { "path": "./apps/pokemon-detail" },
+    { "path": "./apps/pokemon-history" },
+    { "path": "./tsconfig.tools.json" }
+  ]
+}

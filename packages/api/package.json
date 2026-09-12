@@ -1,0 +1,9 @@
+{
+  "name": "@pokedex/api",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@tanstack/react-query": "^5.87.1" },
+  "peerDependencies": { "react": "^19.1.1" }
+}
