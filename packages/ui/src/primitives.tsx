@@ -1,8 +1,10 @@
 import {
   Component,
   type ButtonHTMLAttributes,
+  type InputHTMLAttributes,
   type PropsWithChildren,
   type ReactNode,
+  useId,
 } from 'react';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -10,6 +12,45 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 export function Button({ variant = 'primary', className = '', ...props }: ButtonProps) {
   return <button className={`button button--${variant} ${className}`} {...props} />;
+}
+
+export function PokedexBrand({ compact = false }: { readonly compact?: boolean }) {
+  return (
+    <span className={`pokedex-brand${compact ? ' pokedex-brand--compact' : ''}`}>
+      <span className="pokedex-brand__ball" aria-hidden="true">
+        <i />
+      </span>
+      <span>Pokédex</span>
+    </span>
+  );
+}
+
+type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
+  readonly label: string;
+  readonly error?: string;
+};
+
+export function TextField({ label, error, id, className = '', ...props }: TextFieldProps) {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const errorId = `${inputId}-error`;
+  return (
+    <label className="text-field" htmlFor={inputId}>
+      <span>{label}</span>
+      <input
+        {...props}
+        id={inputId}
+        className={className}
+        aria-invalid={error ? true : props['aria-invalid']}
+        aria-describedby={error ? errorId : props['aria-describedby']}
+      />
+      {error ? (
+        <small id={errorId} role="alert">
+          {error}
+        </small>
+      ) : null}
+    </label>
+  );
 }
 
 export function Spinner({ label = 'Cargando' }: { readonly label?: string }) {
