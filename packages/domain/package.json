@@ -7,8 +7,7 @@
     ".": "./src/index.ts",
     "./auth": "./src/auth.ts",
     "./history": "./src/history.ts",
-    "./search": "./src/search.ts",
-    "./theme": "./src/theme.ts"
+    "./search": "./src/search.ts"
   },
   "dependencies": {
     "zustand": "^5.0.8"
