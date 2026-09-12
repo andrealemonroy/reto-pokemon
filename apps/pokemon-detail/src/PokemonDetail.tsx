@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { pokemonDetailQuery } from '@pokedex/api/queries';
 import type { PokemonDetailRemoteProps } from '@pokedex/contracts';
 import { historyRepository } from '@pokedex/domain/history';
-import { PokemonImage, TypeBadge } from '@pokedex/ui/pokemon';
+import { PokemonImage, TypeBadge, TypeIcon } from '@pokedex/ui/pokemon';
 import { Button, ErrorState, Skeleton } from '@pokedex/ui/primitives';
-import { useEffect, useRef } from 'react';
+import { defaultPokemonTypeMeta, pokemonTypeMeta } from '@pokedex/ui/type-meta';
+import { ArrowLeft, Gauge, Ruler, Weight } from 'lucide-react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import './detail.css';
 
 const STAT_DISPLAY_MAX = 180;
@@ -31,14 +33,20 @@ export default function PokemonDetail({ pokemonId, visitKey, onBack }: PokemonDe
       />
     );
   const pokemon = query.data;
+  const primaryType = pokemon.types[0] ?? 'normal';
+  const primaryTypeMeta = pokemonTypeMeta[primaryType] ?? defaultPokemonTypeMeta;
   return (
-    <main className="detail-page">
+    <main
+      className="detail-page"
+      style={{ '--pokemon-color': primaryTypeMeta.color } as CSSProperties}
+    >
       <button className="detail-back" onClick={onBack}>
-        ← Volver a explorar
+        <ArrowLeft size={18} aria-hidden="true" />
+        Volver a explorar
       </button>
       <article className="detail-hero">
         <div className="detail-visual" aria-hidden="true">
-          <span className="detail-orbit" />
+          <TypeIcon type={primaryType} size={320} className="detail-watermark" />
           <PokemonImage
             src={pokemon.imageUrl}
             fallbackSrc={pokemon.imageFallbackUrl}
@@ -58,15 +66,21 @@ export default function PokemonDetail({ pokemonId, visitKey, onBack }: PokemonDe
           <p className="detail-intro">Información básica y estadísticas del Pokémon.</p>
           <dl className="metrics">
             <div>
-              <dt>Altura</dt>
+              <dt>
+                <Ruler size={15} aria-hidden="true" /> Altura
+              </dt>
               <dd>{pokemon.heightMeters} m</dd>
             </div>
             <div>
-              <dt>Peso</dt>
+              <dt>
+                <Weight size={15} aria-hidden="true" /> Peso
+              </dt>
               <dd>{pokemon.weightKilograms} kg</dd>
             </div>
             <div>
-              <dt>Experiencia base</dt>
+              <dt>
+                <Gauge size={15} aria-hidden="true" /> Experiencia
+              </dt>
               <dd>{pokemon.baseExperience ?? '—'}</dd>
             </div>
           </dl>
