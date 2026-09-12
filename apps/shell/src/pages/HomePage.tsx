@@ -1,9 +1,10 @@
 import { pokemonTypeQuery } from '@pokedex/api/queries';
 import type { PokemonSummary } from '@pokedex/api/types';
-import { PokemonCard } from '@pokedex/ui/pokemon';
+import { PokemonCard, TypeIcon } from '@pokedex/ui/pokemon';
 import { Skeleton } from '@pokedex/ui/primitives';
-import { pokemonTypeMeta } from '@pokedex/ui/type-meta';
+import { defaultPokemonTypeMeta, pokemonTypeMeta } from '@pokedex/ui/type-meta';
 import { useQueries } from '@tanstack/react-query';
+import type { CSSProperties } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HOME_TYPES = ['fire', 'water', 'grass', 'electric', 'psychic', 'dragon'] as const;
@@ -13,17 +14,28 @@ export function HomePage() {
   const queries = useQueries({ queries: HOME_TYPES.map((type) => pokemonTypeQuery(type)) });
   return (
     <main className="home-page">
-      <section className="home-hero">
+      <header className="home-hero">
         <div>
-          <p className="eyebrow">Pokédex</p>
-          <h1>
-            Explora Pokémon
-            <br />
-            <em>por tipo.</em>
-          </h1>
-          <p>Selecciona un Pokémon para consultar su información y estadísticas.</p>
+          <p>Pokédex nacional</p>
+          <h1>Explora Pokémon por tipo</h1>
         </div>
-      </section>
+        <p>Selecciona una categoría o abre una ficha para consultar sus datos.</p>
+      </header>
+      <nav className="type-shortcuts" aria-label="Tipos de Pokémon">
+        {HOME_TYPES.map((type) => {
+          const meta = pokemonTypeMeta[type] ?? defaultPokemonTypeMeta;
+          return (
+            <a
+              key={type}
+              href={`#category-${type}`}
+              style={{ '--type-color': meta.color } as CSSProperties}
+            >
+              <TypeIcon type={type} />
+              {meta.label}
+            </a>
+          );
+        })}
+      </nav>
       <div className="category-list">
         {HOME_TYPES.map((type, index) => (
           <CategorySection
@@ -55,13 +67,15 @@ function CategorySection({
   };
   readonly onSelect: (id: number) => void;
 }) {
-  const meta = pokemonTypeMeta[type] ?? { label: type, color: '#64748b' };
+  const meta = pokemonTypeMeta[type] ?? { ...defaultPokemonTypeMeta, label: type };
   return (
     <section className="category-section" aria-labelledby={`category-${type}`}>
       <header>
-        <span>{String(index).padStart(2, '0')}</span>
+        <span className="category-icon" style={{ '--type-color': meta.color } as CSSProperties}>
+          <TypeIcon type={type} size={22} />
+        </span>
         <div>
-          <p style={{ color: meta.color }}>TIPO</p>
+          <p>Tipo {String(index).padStart(2, '0')}</p>
           <h2 id={`category-${type}`}>{meta.label}</h2>
         </div>
         <p>10 especies</p>

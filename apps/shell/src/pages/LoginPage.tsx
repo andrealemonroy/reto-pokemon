@@ -1,10 +1,12 @@
 import { localAuthService, useAuthStore } from '@pokedex/domain/auth';
-import { Button } from '@pokedex/ui/primitives';
+import { PokemonImage } from '@pokedex/ui/pokemon';
+import { Button, PokedexBrand, TextField } from '@pokedex/ui/primitives';
+import { ArrowRight } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export function LoginPage() {
-  const [email, setEmail] = useState('trainer@acity.dev');
+  const [email, setEmail] = useState('metrica@gmail.com');
   const [password, setPassword] = useState('pokedex');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -37,61 +39,57 @@ export function LoginPage() {
   return (
     <main className="login-page">
       <section className="login-story">
-        <div className="brand">
-          <span className="brand-mark">
-            <i />
-          </span>
-          <span>POKÉDEX</span>
+        <div className="login-brand">
+          <PokedexBrand />
         </div>
-        <div>
-          <p className="eyebrow">PokéAPI</p>
-          <h1>
-            Busca, consulta
-            <br />
-            <em>y guarda.</em>
-          </h1>
-          <p>Explora Pokémon por tipo y revisa tu historial de visitas.</p>
+        <div className="login-art" aria-hidden="true">
+          <span>025</span>
+          <PokemonImage
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/25.png"
+            fallbackSrc="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
+            name="pikachu"
+          />
         </div>
-        <div className="login-index">
-          <span>001</span>
-          <span>151</span>
-          <i />
+        <div className="login-caption">
+          <p>Tu Pokédex personal</p>
+          <span>Busca Pokémon y conserva tu historial de visitas.</span>
         </div>
       </section>
       <section className="login-form-wrap">
         <form className="login-form" onSubmit={(event) => void submit(event)} noValidate>
-          <p className="eyebrow">Inicio de sesión</p>
-          <h2>Ingresar</h2>
-          <p>Esta autenticación es local y solo se usa para la demostración.</p>
-          <label>
-            Correo electrónico
-            <input
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              aria-invalid={Boolean(error)}
-            />
-          </label>
-          <label>
-            Contraseña
-            <input
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              aria-invalid={Boolean(error)}
-            />
-          </label>
+          <div className="login-form__brand">
+            <PokedexBrand />
+          </div>
+          <div className="login-form__heading">
+            <p>Bienvenido de vuelta</p>
+            <h1>Ingresa tus datos</h1>
+          </div>
+          <TextField
+            label="Correo electrónico"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            aria-invalid={Boolean(error)}
+          />
+          <TextField
+            label="Contraseña"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            aria-invalid={Boolean(error)}
+          />
           {error && (
             <p className="form-error" role="alert">
               {error}
             </p>
           )}
           <Button type="submit" disabled={submitting}>
-            {submitting ? 'Ingresando…' : 'Ingresar'} <span aria-hidden="true">→</span>
+            {submitting ? 'Ingresando…' : 'Ingresar'}
+            <ArrowRight size={18} aria-hidden="true" />
           </Button>
-          <small>Usa cualquier email válido y una contraseña de 6 o más caracteres.</small>
+          <small>Correo: metrica@gmail.com Contraseña: pokedex</small>
         </form>
       </section>
     </main>

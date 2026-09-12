@@ -1,6 +1,6 @@
 import { localAuthService, useAuthStore } from '@pokedex/domain/auth';
-import { useThemeStore, type ThemePreference } from '@pokedex/domain/theme';
-import { Button } from '@pokedex/ui/primitives';
+import { Button, PokedexBrand } from '@pokedex/ui/primitives';
+import { Clock3, Compass, Search } from 'lucide-react';
 import { useEffect, useState, type PropsWithChildren } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LatestVisitToast } from './LatestVisitToast';
@@ -10,8 +10,6 @@ export function AppLayout({ children }: PropsWithChildren) {
   const [searchOpen, setSearchOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
-  const preference = useThemeStore((state) => state.preference);
-  const setPreference = useThemeStore((state) => state.setPreference);
   const navigate = useNavigate();
   useEffect(() => {
     const openSearch = (event: globalThis.KeyboardEvent) => {
@@ -36,16 +34,17 @@ export function AppLayout({ children }: PropsWithChildren) {
         </a>
         <header className="topbar">
           <NavLink to="/" className="brand" aria-label="Pokédex, inicio">
-            <span className="brand-mark" aria-hidden="true">
-              <i />
-            </span>
-            <span>POKÉDEX</span>
+            <PokedexBrand compact />
           </NavLink>
           <nav aria-label="Navegación principal">
             <NavLink to="/" end>
+              <Compass size={17} aria-hidden="true" />
               Explorar
             </NavLink>
-            <NavLink to="/history">Historial</NavLink>
+            <NavLink to="/history">
+              <Clock3 size={17} aria-hidden="true" />
+              Historial
+            </NavLink>
           </nav>
           <div className="topbar-actions">
             <button
@@ -54,21 +53,10 @@ export function AppLayout({ children }: PropsWithChildren) {
               aria-haspopup="dialog"
               aria-label="Buscar Pokémon"
             >
-              <span aria-hidden="true">⌕</span>
+              <Search size={18} aria-hidden="true" />
               <span className="search-label">Buscar Pokémon</span>
               <kbd>⌘ K</kbd>
             </button>
-            <label className="theme-select">
-              <span className="sr-only">Tema</span>
-              <select
-                value={preference}
-                onChange={(event) => setPreference(event.target.value as ThemePreference)}
-              >
-                <option value="system">Sistema</option>
-                <option value="light">Claro</option>
-                <option value="dark">Oscuro</option>
-              </select>
-            </label>
             <details className="user-menu">
               <summary aria-label="Menú de usuario">
                 <span>{user?.displayName.charAt(0).toUpperCase()}</span>
@@ -94,13 +82,16 @@ export function AppLayout({ children }: PropsWithChildren) {
         </footer>
         <nav className="mobile-nav" aria-label="Navegación móvil">
           <NavLink to="/" end>
-            <span aria-hidden="true">⌂</span>Explorar
+            <Compass aria-hidden="true" />
+            Explorar
           </NavLink>
           <button onClick={() => setSearchOpen(true)}>
-            <span aria-hidden="true">⌕</span>Buscar
+            <Search aria-hidden="true" />
+            Buscar
           </button>
           <NavLink to="/history">
-            <span aria-hidden="true">◷</span>Historial
+            <Clock3 aria-hidden="true" />
+            Historial
           </NavLink>
         </nav>
         <LatestVisitToast />

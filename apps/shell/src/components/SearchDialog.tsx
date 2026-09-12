@@ -4,6 +4,7 @@ import { normalizePokemonSearch } from '@pokedex/domain/search';
 import { PokemonCard } from '@pokedex/ui/pokemon';
 import { Button, ErrorState, Skeleton, Spinner } from '@pokedex/ui/primitives';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { Search, X } from 'lucide-react';
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -96,11 +97,11 @@ export function SearchDialog({
             <h2 id="search-title">Buscar Pokémon</h2>
           </div>
           <button className="dialog-close" onClick={onClose} aria-label="Cerrar buscador">
-            ×
+            <X size={20} aria-hidden="true" />
           </button>
         </header>
         <form className="search-form" onSubmit={submit} role="search">
-          <span aria-hidden="true">⌕</span>
+          <Search size={20} aria-hidden="true" />
           <label className="sr-only" htmlFor="pokemon-search">
             Nombre exacto del Pokémon
           </label>
